@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Member Dashboard — Rohis{% endblock %}
+
+{% block head %}
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css" rel="stylesheet">
+
+<style>
+#dashboard-calendar {
+    margin-top: 30px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.fc-event-title {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+.rohis-session {
+    background-color: #1976d2 !important;
+    border-color: #1976d2 !important;
+}
+
+.fc-day-today {
+    background: #e3f2fd !important;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="mt-4">
+    <div class="card shadow p-4">
+        <h2 class="fw-bold mb-3">Member Dashboard</h2>
+        <p class="text-muted mb-4">Welcome, {{ current_user.name }}</p>
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <a href="{{ url_for('attendance_history') }}" class="text-decoration-none text-dark h-100 d-block">
+                    <div class="card shadow-sm p-3 text-center h-100">
+                        <h5 class="mb-1">📈 My Attendance History</h5>
+                        <p class="small text-muted mb-0">View your attendance per session</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-6">
+                <a href="{{ url_for('member_list') }}" class="text-decoration-none text-dark h-100 d-block">
+                    <div class="card shadow-sm p-3 text-center h-100">
+                        <h5 class="mb-1">👥 View Member List</h5>
+                        <p class="small text-muted mb-0">See other members</p>
+                    </div>
+                </a>
+            </div>
+
+            {% if current_user.can_mark_attendance %}
+            <div class="col-md-6">
+                <a href="{{ url_for('attendance') }}" class="text-decoration-none text-dark h-100 d-block">
+                    <div class="card shadow-sm p-3 text-center h-100">
+                        <h5 class="mb-1">✅ Mark Attendance</h5>
+                        <p class="small text-muted mb-0">You can mark attendance for your division</p>
+                    </div>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+        <hr class="my-5">
+
+        <div class="text-center">
+            <a href="{{ url_for('calendar') }}" class="btn btn-primary btn-lg">
+                📅 View Rohis Calendar
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}
